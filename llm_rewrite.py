@@ -4,19 +4,19 @@ import json
 import time
 from tqdm import tqdm
 
-API_KEY = "AIzaSyBy1DHdAhq4qJfSUOED3oT-GInwKw9Her4"
+API_KEY = ""
 
 MODEL = "gemini-1.5-flash-002"
 
 API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent?key={API_KEY}"
 
 
-input_file = "xsum-gpt3-5.json" 
+input_file = "writing_GPT_4o.json" 
 output_json = "revised_texts.json"  
 output_human_txt = "revised_human_texts.txt"  
 output_llm_txt = "revised_llm_texts.txt" 
 
-print("Loading dataset...")
+print("Loading dataset")
 
 with open(input_file, "r", encoding="utf-8") as file:
     data = json.load(file)
@@ -30,7 +30,7 @@ df = pd.DataFrame(data)
 if 'text' not in df.columns or 'label' not in df.columns:
     raise ValueError("Dataset must have text and label columns.")
 
-print(f"Dataset loaded, total items: {len(df)}")
+print(f"Dataset loaded. total items: {len(df)}")
 
 # Function for asking LLm to rewrite
 def revise_text(text, index):
@@ -92,5 +92,5 @@ with open(output_human_txt, "w", encoding="utf-8") as human_file, open(output_ll
         elif row["label"] == "llm":
             llm_file.write(formatted_text + "\n")
 
-print(f"Modified Human texts saved to: {output_human_txt}")
-print(f"Modified LLM texts saved to: {output_llm_txt}")
+print(f"Modified Human texts: {output_human_txt}")
+print(f"Modified LLM texts: {output_llm_txt}")
