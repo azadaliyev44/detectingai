@@ -1,9 +1,9 @@
 import json
-from similarity_scorer import SimScore
+from similarity_scorer import Scorer
 from sklearn.metrics import roc_auc_score
 
 # CUDA requred, for cpu - change cuda to cpu
-simscore = SimScore(device="cuda:0", checkpoint="facebook/bart-large-cnn")
+scorer = Scorer(device="cuda:0", checkpoint="facebook/bart-large-cnn")
 
 input_file = "revised_texts.json"
 
@@ -30,8 +30,8 @@ for row in data:
         llm_revised.append(revised_text)
 
 # similarity calculation
-chatgpt_scores = simscore.score(llm_revised, llm_original)
-human_scores = simscore.score(human_revised, human_original)
+chatgpt_scores = scorer.score(llm_revised, llm_original)
+human_scores = scorer.score(human_revised, human_original)
 
 # AUROC
 y_true = [1] * len(chatgpt_scores) + [0] * len(human_scores)
