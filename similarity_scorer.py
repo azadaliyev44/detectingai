@@ -9,7 +9,7 @@ import numpy as np
 from tqdm import tqdm
 
 
-class SimScorer:
+class SimScore:
     def __init__(self, device='cuda:0', max_length=1024, checkpoint='facebook/bart-large-cnn'):
         self.device = device
         self.max_length = max_length
